@@ -1,0 +1,76 @@
+<?php
+
+enum Universo: string {
+    case Warcraft = "Warcraft";
+    case Starcraft = "Starcraft";
+    case Diablo = "Diablo";
+}
+
+enum Dificultat: string {
+    case Facil = "Facil";
+    case Normal = "Normal";
+    case Dificil = "Dificil";
+}
+
+
+
+class Personaje {
+    public $nombre;
+    public Universo $universo;
+    public Dificultat $dificultat;
+    public array $habilidades;
+
+    
+
+    public function __construct ($nombre, Universo $universo, Dificultat $dificultat){
+        $this->nombre = $nombre;
+        $this->universo = $universo;
+        $this->dificultat = $dificultat;
+        $this->habilidades = [];
+    }
+
+
+    public function anadirHabilidad (Habilidad $habilidad) {
+        $this->habilidades[] = $habilidad;
+    }
+
+    public function info(){
+        echo "El nombre del personaje es ". $this->nombre . "<br>";
+        echo "El universo del personajes ". $this->universo->value . "<br>";
+        echo "La dificultat del personaje es ". $this->dificultat->value . "<br>";
+
+        foreach($this->habilidades as $habilidad){
+            echo "Una habilidad del personaje es " . $habilidad->nombre . " con daño " . $habilidad->daño. " y alcance de ". $habilidad->alcance . "<br>";
+        }
+        
+    }
+
+
+
+
+}
+
+class Habilidad {
+    public $daño;
+    public $alcance;
+    public $nombre;
+
+    public function __construct($daño, $alcance, $nombre){
+        $this->daño = $daño;
+        $this->alcance = $alcance;
+        $this->nombre = $nombre;
+    }
+}
+
+
+$habilidad1 = new Habilidad (40, 20, "Descarga de Relampagos");
+$habilidad2 = new Habilidad (30, 10, "Bola de Fuego");
+$habilidad3 = new Habilidad (10, 30, "Golpe de Martillo");
+$personaje1 = new Personaje ("Thrall", Universo::Warcraft,Dificultat::Normal);
+$personaje1->anadirHabilidad($habilidad1);
+$personaje1->anadirHabilidad($habilidad2);
+$personaje1->anadirHabilidad($habilidad3);
+$personaje1->info();
+
+
+?>
